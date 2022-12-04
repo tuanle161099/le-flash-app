@@ -5,6 +5,7 @@ import { Net } from '@sentre/senhub'
  */
 type Conf = {
   node: string
+  leFlashId: string
 }
 
 const conf: Record<Net, Conf> = {
@@ -13,6 +14,7 @@ const conf: Record<Net, Conf> = {
    */
   devnet: {
     node: 'https://api.devnet.solana.com',
+    leFlashId: '3E8eFwLQhHgtzqAnestzG7SeZUWYH7BZLf8m9EGa8wJH',
   },
 
   /**
@@ -20,6 +22,7 @@ const conf: Record<Net, Conf> = {
    */
   testnet: {
     node: 'https://api.testnet.solana.com',
+    leFlashId: '3E8eFwLQhHgtzqAnestzG7SeZUWYH7BZLf8m9EGa8wJH',
   },
 
   /**
@@ -27,6 +30,7 @@ const conf: Record<Net, Conf> = {
    */
   mainnet: {
     node: 'https://api.mainnet-beta.solana.com',
+    leFlashId: '3E8eFwLQhHgtzqAnestzG7SeZUWYH7BZLf8m9EGa8wJH',
   },
 }
 

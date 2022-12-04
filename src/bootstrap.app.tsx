@@ -5,6 +5,7 @@ import View from 'view'
 
 import model from 'model'
 import configs from 'configs'
+import { AppLoader } from 'view/appLoader'
 
 const {
   manifest: { appId },
@@ -14,7 +15,9 @@ export const Page = () => {
   return (
     <AntdProvider appId={appId}>
       <Provider store={model}>
-        <View />
+        <AppLoader>
+          <View />
+        </AppLoader>
       </Provider>
     </AntdProvider>
   )
