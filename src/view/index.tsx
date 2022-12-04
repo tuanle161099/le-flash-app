@@ -6,7 +6,7 @@ import { Row, Col, Button } from 'antd'
 
 import { Recipient, useDeposit } from 'hooks/action/useDeposit'
 import useWithdrawNFT from 'hooks/action/useWithdrawNFT'
-import { ChequeData, Leaf, MerkleDistributor } from 'lib'
+import { Leaf, MerkleDistributor } from 'lib'
 import { useUploadFile } from 'hooks/useUploadFile'
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes'
 import useUtility from 'hooks/useUtility'
@@ -21,8 +21,6 @@ const collection = 'PV64GFvXc9vNWWvQs9XAxGYjy9xzACHw9yAJhAypeVe'
 // const r1 = '9n41gkNJAXuwtwpBxwAAS9wmDoEgH79cs3DtYqcawXwa'
 // const r2 = '2A74q3JHKPpQLbz6AXsRgwSGzUVK57hx3Kf6te9n4Dbn'
 const r3 = 'G7Q73K3cL2eQQrp7KcZw3hEboZb2Zmr2Lb7p6wNNiwdF'
-
-const distributorAddress = '9GNAW8gpiatCFHryfF5XyhXP3wKXLb9Kqd3zgdn8y43M'
 
 const recipients: Recipient[] = [
   {

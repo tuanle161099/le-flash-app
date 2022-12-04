@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { rpc, useWalletAddress } from '@sentre/senhub'
 import { getAnchorProvider } from '@sen-use/web3'
 import { AnchorProvider } from '@project-serum/anchor'
