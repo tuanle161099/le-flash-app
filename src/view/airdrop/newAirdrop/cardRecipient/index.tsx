@@ -1,23 +1,8 @@
 import IonIcon from '@sentre/antd-ionicon'
 import { Button, Card, Col, Input, Row, Typography } from 'antd'
 import NftSelection from 'components/nftSelection/nftSelection'
-import {
-  useFindByCollection,
-  useMyCollection,
-  useMyNfts,
-} from 'hooks/metaFlex/useNft'
 
 const CardRecipient = () => {
-  const nfts = useMyNfts()
-  const collections = useMyCollection()
-  const nftByMints = useFindByCollection(
-    '7STVRCxW6CkyPQnCiQWYfBURYVwMc1q75N7bXnCVU1Em',
-  )
-
-  console.log(nfts, 'nfts')
-  console.log(collections)
-  console.log(nftByMints)
-
   return (
     <Card>
       <Row gutter={[16, 16]}>

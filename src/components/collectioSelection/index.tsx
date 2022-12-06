@@ -12,7 +12,6 @@ import { AppDispatch } from 'model'
 const CollectionSelection = () => {
   const [visible, setVisible] = useState(false)
   const collections = useMyCollection()
-
   const dispatch = useDispatch<AppDispatch>()
 
   const onSelectCollection = (collection: string) => {
