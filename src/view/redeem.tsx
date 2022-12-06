@@ -6,7 +6,6 @@ import { Row, Button } from 'antd'
 import { notifyError } from '@sen-use/app'
 
 import { MerkleDistributor } from 'lib'
-import useUtility from 'hooks/useUtility'
 import { useGetMetadata } from 'hooks/useGetMetadata'
 import useWithdrawNFT from 'hooks/action/useWithdrawNFT'
 
@@ -19,11 +18,12 @@ const Redeem = () => {
   const getMetaData = useGetMetadata()
 
   const walletAddress = useWalletAddress()
-  const utility = useUtility()
 
   const getMerkleDistributor = useCallback(async () => {
     try {
-      const distributor = await utility.getDistributorData(distributorAddress)
+      const distributor = await window.leFlash.getDistributorData(
+        distributorAddress,
+      )
       console.log(distributor)
       const {
         data: { data },
@@ -36,7 +36,7 @@ const Redeem = () => {
       notifyError(error)
     } finally {
     }
-  }, [getMetaData, utility])
+  }, [getMetaData])
 
   const recipientData = useMemo(() => {
     if (!merkle) return
@@ -54,7 +54,7 @@ const Redeem = () => {
 
     try {
       setLoading(true)
-      await utility.claim({
+      await window.leFlash.claim({
         distributorAddress,
         proof,
         data: recipientData,

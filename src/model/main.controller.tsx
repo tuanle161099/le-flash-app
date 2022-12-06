@@ -5,7 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
  */
 
 export type State = {
-  counter: number
+  collection: string
 }
 
 /**
@@ -14,20 +14,17 @@ export type State = {
 
 const NAME = 'main'
 const initialState: State = {
-  counter: 0,
+  collection: '',
 }
 
 /**
  * Actions
  */
 
-export const increaseCounter = createAsyncThunk<State, void, { state: any }>(
-  `${NAME}/increaseCounter`,
-  async (_, { getState }) => {
-    const {
-      main: { counter },
-    } = getState()
-    return { counter: counter + 1 }
+export const setCollection = createAsyncThunk(
+  `${NAME}/setCollection`,
+  async (collection: string) => {
+    return { collection }
   },
 )
 
@@ -41,7 +38,7 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     void builder.addCase(
-      increaseCounter.fulfilled,
+      setCollection.fulfilled,
       (state, { payload }) => void Object.assign(state, payload),
     ),
 })
