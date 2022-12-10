@@ -2,7 +2,7 @@ import { IdlAccounts, Idl, BN } from '@project-serum/anchor'
 import { IdlEvent } from '@project-serum/anchor/dist/cjs/idl'
 import { TypeDef } from '@project-serum/anchor/dist/cjs/program/namespace/types'
 import { Wallet } from '@project-serum/anchor/dist/cjs/provider'
-import { LeFlash } from '../target/types/le_flash'
+import { LeFlash } from './target/types/le_flash'
 
 export type AnchorWallet = Wallet
 

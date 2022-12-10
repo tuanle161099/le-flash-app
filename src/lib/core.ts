@@ -8,7 +8,7 @@ import {
 } from '@project-serum/anchor'
 
 import { TOKEN_PROGRAM_ID } from '@project-serum/anchor/dist/cjs/utils/token'
-import { LeFlash } from '../target/types/le_flash'
+import { LeFlash } from './target/types/le_flash'
 import { DEFAULT_LE_FLASH_IDL, FEE_OPTIONS } from './constant'
 import { findNftMetadataAddress, findReceipt, isAddress, isHash } from './utils'
 import {

@@ -1,4 +1,4 @@
-import { IDL } from '../target/types/le_flash'
+import { IDL } from './target/types/le_flash'
 import { web3, BorshAccountsCoder, BN } from '@project-serum/anchor'
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes'
 import { FeeOptions } from './types'
