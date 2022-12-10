@@ -5,11 +5,11 @@ import { Leaf, MerkleDistributor } from 'lib'
 
 import { notifyError, notifySuccess } from '@sen-use/app'
 import { Row, Col, Button } from 'antd'
-import Redeem from './redeem'
+// import Redeem from './redeem'
 
-import { Recipient } from 'hooks/action/useInitAirdrop'
+// import { Recipient } from 'hooks/action/useInitAirdrop'
 import useWithdrawNFT from 'hooks/action/useWithdrawNFT'
-import { useUploadFile } from 'hooks/useUploadFile'
+import { useUploadFile } from 'hooks/metadata/useUploadFile'
 
 const collection = 'PV64GFvXc9vNWWvQs9XAxGYjy9xzACHw9yAJhAypeVe'
 
@@ -21,11 +21,11 @@ const collection = 'PV64GFvXc9vNWWvQs9XAxGYjy9xzACHw9yAJhAypeVe'
 // const r2 = '2A74q3JHKPpQLbz6AXsRgwSGzUVK57hx3Kf6te9n4Dbn'
 const r3 = 'G7Q73K3cL2eQQrp7KcZw3hEboZb2Zmr2Lb7p6wNNiwdF'
 
-const recipients: Recipient[] = [
-  {
-    mintNft: 'HR8NVufX46rhAWU6tUm4QmyB77BUwbN6HAxVWgpE3dEm',
-  },
-]
+// const recipients: Recipient[] = [
+//   {
+//     mintNft: 'HR8NVufX46rhAWU6tUm4QmyB77BUwbN6HAxVWgpE3dEm',
+//   },
+// ]
 
 const recipientInfos = [
   {
@@ -169,7 +169,7 @@ const View = () => {
         <Button loading={loading} onClick={onConfirm}>
           init distributor
         </Button>
-        <Redeem />
+        {/* <Redeem /> */}
       </Col>
     </Row>
   )

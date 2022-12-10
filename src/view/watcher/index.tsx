@@ -1,5 +1,6 @@
 import { Fragment, useMemo } from 'react'
 import DistributorWatcher from './distributor.watcher'
+import PoolWatcher from './pool.watcher'
 
 import { useWatcherLoading } from './watcher'
 
@@ -16,6 +17,7 @@ export const AppWatcher: React.FC = ({ children }) => {
   return (
     <Fragment>
       <DistributorWatcher />
+      <PoolWatcher />
       {loading ? null : children}
     </Fragment>
   )

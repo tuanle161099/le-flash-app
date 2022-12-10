@@ -4,6 +4,7 @@ import { devTools, bigintSerializationMiddleware } from 'model/devTools'
 import main from 'model/main.controller'
 import recipients from 'model/recipients.controller'
 import distributors from 'model/distributor.controller'
+import pools from 'model/pool.controller'
 
 /**
  * Isolated store
@@ -16,6 +17,7 @@ const model = configureStore({
     main,
     recipients,
     distributors,
+    pools,
   },
 })
 

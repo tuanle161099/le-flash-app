@@ -5,7 +5,7 @@ import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes'
 import { notifyError, notifySuccess } from '@sen-use/app'
 import { RecipientInfo } from 'model/recipients.controller'
 import { Leaf, MerkleDistributor } from 'lib'
-import { useUploadFile } from 'hooks/useUploadFile'
+import { useUploadFile } from 'hooks/metadata/useUploadFile'
 import useLeFlash from 'hooks/useLeflash'
 
 export type Recipient = {
