@@ -1,6 +1,10 @@
-import { Tag } from 'antd'
+import StatusTag from 'components/statusTag'
 
-const Status = () => {
-  return <Tag>Ready</Tag>
+import { ColumnProps } from './index'
+import { useDistributorStatus } from 'hooks/distributor/useDistributorStatus'
+
+const Status = ({ distributorAddress }: ColumnProps) => {
+  const state = useDistributorStatus(distributorAddress)
+  return <StatusTag state={state} />
 }
 export default Status

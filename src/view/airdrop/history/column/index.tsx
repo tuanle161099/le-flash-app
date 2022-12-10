@@ -1,7 +1,7 @@
 import Collection from './collection'
 import CreatedAt from './createdAt'
-import Receivers from './receivers'
-import UnlockAt from './unlockAt'
+import UnclaimedList from './unClaimedList'
+import EndAt from './endAt'
 
 export type ColumnProps = {
   distributorAddress: string
@@ -16,10 +16,10 @@ export const HISTORY_COLUMNS = [
     ),
   },
   {
-    title: 'UNLOCK DATE',
+    title: 'EXPIRATION DATE',
     dataIndex: 'distributorAddress',
     render: (distributorAddress: string) => (
-      <UnlockAt distributorAddress={distributorAddress} />
+      <EndAt distributorAddress={distributorAddress} />
     ),
   },
   {
@@ -31,10 +31,10 @@ export const HISTORY_COLUMNS = [
   },
 
   {
-    title: 'LIST RECEIVERS',
+    title: 'UNCLAIMED LIST',
     dataIndex: 'distributorAddress',
     render: (distributorAddress: string) => (
-      <Receivers distributorAddress={distributorAddress} />
+      <UnclaimedList distributorAddress={distributorAddress} />
     ),
   },
 ]

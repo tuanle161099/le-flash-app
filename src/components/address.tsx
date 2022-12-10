@@ -16,12 +16,12 @@ const Address = ({ address }: { address: string }) => {
 
   return (
     <Space>
-      <Typography.Text type="secondary" className="t-16">
+      <Typography.Text type="secondary" className="caption">
         {util.shortenAddress(address, 3)}
       </Typography.Text>
       <Tooltip title="Copied" open={copied}>
         <CopyToClipboard text={address} onCopy={onCopy}>
-          <Typography.Text style={{ cursor: 'pointer' }} className="t-16">
+          <Typography.Text style={{ cursor: 'pointer' }} className="caption">
             <IonIcon name="copy-outline" />
           </Typography.Text>
         </CopyToClipboard>

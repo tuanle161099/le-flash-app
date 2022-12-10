@@ -6,6 +6,7 @@ import recipients from 'model/recipients.controller'
 import distributors from 'model/distributor.controller'
 import pools from 'model/pool.controller'
 import cheques from 'model/cheque.controller'
+import receipts from 'model/receipt.controller'
 
 /**
  * Isolated store
@@ -20,6 +21,7 @@ const model = configureStore({
     distributors,
     pools,
     cheques,
+    receipts,
   },
 })
 

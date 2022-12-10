@@ -500,6 +500,10 @@
         {
           "name": "recipient",
           "type": "publicKey"
+        },
+        {
+          "name": "mint",
+          "type": "publicKey"
         }
       ]
     }
@@ -631,6 +635,10 @@
             "type": {
               "array": ["u8", 32]
             }
+          },
+          {
+            "name": "mintAddress",
+            "type": "publicKey"
           }
         ]
       }

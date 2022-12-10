@@ -1,11 +1,13 @@
 import moment from 'moment'
 import { util } from '@sentre/senhub'
+
 import { Typography } from 'antd'
 import NFTDisplay from './nft'
 import Status from './status'
 import Claim from './claim'
 
 import { FORMAT_DATE } from 'constant'
+import { ReceiveData } from '..'
 
 export type ColumnProps = {
   distributorAddress: string
@@ -50,18 +52,25 @@ export const RECEIVE_COLUMNS = [
   {
     title: 'NFT',
     dataIndex: 'chequeAddress',
-    render: (chequeAddress: string) => (
-      <NFTDisplay chequeAddress={chequeAddress} />
+    render: (chequeAddress: string, { distributorAddress }: ReceiveData) => (
+      <NFTDisplay
+        chequeAddress={chequeAddress}
+        distributorAddress={distributorAddress}
+      />
     ),
   },
   {
     title: 'STATUS',
     dataIndex: 'distributorAddress',
-    render: (distributorAddress: string) => <Status />,
+    render: (distributorAddress: string) => (
+      <Status distributorAddress={distributorAddress} />
+    ),
   },
   {
     title: 'ACTION',
-    dataIndex: 'chequeAddress',
-    render: (distributorAddress: string) => <Claim />,
+    dataIndex: 'distributorAddress',
+    render: (distributorAddress: string) => (
+      <Claim distributorAddress={distributorAddress} />
+    ),
   },
 ]

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { BN, web3 } from '@project-serum/anchor'
 import { bs58 } from '@project-serum/anchor/dist/cjs/utils/bytes'
 
@@ -7,6 +8,7 @@ import { RecipientInfo } from 'model/recipients.controller'
 import { Leaf, MerkleDistributor } from 'lib'
 import { useUploadFile } from 'hooks/metadata/useUploadFile'
 import useLeFlash from 'hooks/useLeflash'
+import { AppState } from 'model'
 
 export type Recipient = {
   address?: string
@@ -14,6 +16,7 @@ export type Recipient = {
 }
 
 export const useInitAirdrop = () => {
+  const pools = useSelector(({ pools }: AppState) => pools)
   const [loading, setLoading] = useState(false)
   const uploadToAWS = useUploadFile()
   const leFlash = useLeFlash()
@@ -27,10 +30,21 @@ export const useInitAirdrop = () => {
           signers: web3.Keypair[]
         }[] = []
 
-        const { poolAddress } = await leFlash.initializePool({
-          mint: new web3.PublicKey(collection),
-        })
+        //Check is wrap NFT?
+        let pool =
+          Object.keys(pools).find(
+            (address) => pools[address].mint.toBase58() === collection,
+          ) || ''
 
+        if (!pool) {
+          // init Pool
+          const { poolAddress } = await leFlash.initializePool({
+            mint: new web3.PublicKey(collection),
+          })
+          pool = poolAddress
+        }
+
+        // Build tree data
         const nextRecipients: RecipientInfo[] = []
         for (const { walletAddress, mintAddress } of recipients) {
           const newChequeKeypair = web3.Keypair.generate()
@@ -38,7 +52,7 @@ export const useInitAirdrop = () => {
             recipient: walletAddress,
             mintNFTAddress: mintAddress,
             sendAndConfirm: false,
-            poolAddress,
+            poolAddress: pool,
             chequeKeypair: newChequeKeypair,
           })
           txs.push({ tx, signers: [newChequeKeypair] })
@@ -62,6 +76,7 @@ export const useInitAirdrop = () => {
         const newMerkle = new MerkleDistributor(balanceTree)
         const dataBuffer = newMerkle.toBuffer()
 
+        // Send tree buff to aws
         const data = {
           checked: false,
           createAt: Math.floor(Date.now() / 1000),
@@ -76,7 +91,7 @@ export const useInitAirdrop = () => {
         const file = new File(blob, 'metadata.txt')
         const cid = await uploadToAWS(file)
         const metadata = bs58.decode(cid)
-        const { mintLpt } = await leFlash.getPoolData(poolAddress)
+        const { mintLpt } = await leFlash.getPoolData(pool)
         const distributor = web3.Keypair.generate()
         const { txId, tx } = await leFlash.initializeDistributor({
           tokenAddress: mintLpt.toBase58(),
@@ -100,7 +115,7 @@ export const useInitAirdrop = () => {
         setLoading(false)
       }
     },
-    [leFlash, uploadToAWS],
+    [leFlash, pools, uploadToAWS],
   )
 
   return { onAirdrop, loading }

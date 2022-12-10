@@ -501,6 +501,10 @@ export type LeFlash = {
           name: 'recipient'
           type: 'publicKey'
         },
+        {
+          name: 'mint'
+          type: 'publicKey'
+        },
       ]
     },
   ]
@@ -631,6 +635,10 @@ export type LeFlash = {
             type: {
               array: ['u8', 32]
             }
+          },
+          {
+            name: 'mintAddress'
+            type: 'publicKey'
           },
         ]
       }
@@ -1414,6 +1422,10 @@ export const IDL: LeFlash = {
           name: 'recipient',
           type: 'publicKey',
         },
+        {
+          name: 'mint',
+          type: 'publicKey',
+        },
       ],
     },
   ],
@@ -1544,6 +1556,10 @@ export const IDL: LeFlash = {
             type: {
               array: ['u8', 32],
             },
+          },
+          {
+            name: 'mintAddress',
+            type: 'publicKey',
           },
         ],
       },

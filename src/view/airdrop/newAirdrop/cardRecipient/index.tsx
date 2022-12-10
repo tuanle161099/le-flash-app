@@ -25,7 +25,6 @@ const CardRecipient = () => {
         mintAddress: nfts[i].mintAddress.toBase58(),
       }
     }
-    console.log(nextRecipients)
     dispatch(setRecipient(nextRecipients))
   }
 
@@ -65,6 +64,7 @@ const CardRecipient = () => {
             onClick={() => onAirdrop(recipients, collection)}
             type="primary"
             loading={loading}
+            disabled={!recipients.length}
           >
             CONFIRM
           </Button>

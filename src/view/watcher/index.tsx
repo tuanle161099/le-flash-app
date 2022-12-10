@@ -2,6 +2,7 @@ import { Fragment, useMemo } from 'react'
 import ChequeWatcher from './cheque.watcher'
 import DistributorWatcher from './distributor.watcher'
 import PoolWatcher from './pool.watcher'
+import ReceiptWatcher from './receipt.watcher'
 
 import { useWatcherLoading } from './watcher'
 
@@ -20,6 +21,7 @@ export const AppWatcher: React.FC = ({ children }) => {
       <DistributorWatcher />
       <PoolWatcher />
       <ChequeWatcher />
+      <ReceiptWatcher />
       {loading ? null : children}
     </Fragment>
   )

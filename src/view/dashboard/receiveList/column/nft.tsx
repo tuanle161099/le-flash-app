@@ -1,31 +1,35 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Avatar, Space, Typography } from 'antd'
-
-import { useNftData } from 'hooks/metaFlex/useNft'
 import { AppState } from 'model'
+import NFTDisplay from 'components/nftDisplay'
 
-const NFTDisplay = ({ chequeAddress }: { chequeAddress: string }) => {
+const NFT = ({
+  chequeAddress,
+  distributorAddress,
+}: {
+  chequeAddress: string
+  distributorAddress: string
+}) => {
   const cheques = useSelector(({ cheques }: AppState) => cheques)
+  const receipts = useSelector(({ receipts }: AppState) => receipts)
 
   const mintNft = useMemo(() => {
-    const result = Object.keys(cheques).find(
-      (address) => address === chequeAddress,
+    let result: string | undefined = ''
+    result = Object.keys(receipts).find(
+      (address) =>
+        receipts[address].distributor.toBase58() === distributorAddress,
     )
+    if (result) return receipts[result].mintAddress.toBase58()
+
+    result = Object.keys(cheques).find((address) => address === chequeAddress)
+
     if (!result) return ''
     const collectionAddr = cheques[result].mint.toBase58()
     return collectionAddr
-  }, [chequeAddress, cheques])
+  }, [chequeAddress, cheques, distributorAddress, receipts])
 
-  const { nftData } = useNftData(mintNft)
-
-  return (
-    <Space>
-      <Avatar size={24} src={nftData?.json?.image} />
-      <Typography.Text>{nftData?.name || nftData?.json?.name}</Typography.Text>
-    </Space>
-  )
+  return <NFTDisplay mintAddress={mintNft} />
 }
 
-export default NFTDisplay
+export default NFT

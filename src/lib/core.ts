@@ -509,12 +509,14 @@ class LeFlashProgram {
     data,
     feeOptions = FEE_OPTIONS(this._provider.wallet.publicKey.toBase58()),
     sendAndConfirm = true,
+    mintAddress,
   }: {
     distributorAddress: string
     proof: Array<Buffer>
     data: Leaf
     feeOptions?: FeeOptions
     sendAndConfirm?: boolean
+    mintAddress: string
   }) => {
     const { fee, feeCollectorAddress } = feeOptions
     if (!isAddress(feeCollectorAddress))
@@ -523,6 +525,7 @@ class LeFlashProgram {
       throw new Error('Invalid distributor address')
     if (!this._provider.wallet.publicKey.equals(data.authority))
       throw new Error('Invalid athority address')
+    const mintPub = new web3.PublicKey(mintAddress)
 
     const { mint: tokenPublicKey } = await this.getDistributorData(
       distributorAddress,
@@ -552,6 +555,7 @@ class LeFlashProgram {
         data.salt.toJSON().data,
         fee,
         data.chequeAddress,
+        mintPub,
       )
       .accounts({
         authority: this._provider.wallet.publicKey,

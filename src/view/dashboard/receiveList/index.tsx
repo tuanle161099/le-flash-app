@@ -43,6 +43,10 @@ const ReceiveList = () => {
         }
       }
     }
+    result.sort((a, b) => {
+      if (!a.unlockDate) return 0
+      return b.unlockDate - a.unlockDate
+    })
     return setMyList(result)
   }, [distributors, getMetadata, walletAddress])
 
