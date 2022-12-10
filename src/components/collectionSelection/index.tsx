@@ -1,18 +1,20 @@
 import { Fragment, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import IonIcon from '@sentre/antd-ionicon'
-import { Modal, Row, Col, Typography, Button } from 'antd'
+import { Modal, Row, Col, Typography, Button, Space, Avatar } from 'antd'
 import BodySelection from 'components/bodySelection'
 
-import { useMyCollection } from 'hooks/metaFlex/useNft'
+import { useMyCollection, useNftData } from 'hooks/metaFlex/useNft'
 import { setCollection } from 'model/main.controller'
-import { AppDispatch } from 'model'
+import { AppDispatch, AppState } from 'model'
 
 const CollectionSelection = () => {
   const [visible, setVisible] = useState(false)
+  const { collection } = useSelector(({ main }: AppState) => main)
   const collections = useMyCollection()
   const dispatch = useDispatch<AppDispatch>()
+  const { nftData } = useNftData(collection)
 
   const onSelectCollection = (collection: string) => {
     dispatch(setCollection(collection))
@@ -22,16 +24,29 @@ const CollectionSelection = () => {
   return (
     <Fragment>
       <Button
-        icon={<IonIcon name="chevron-down-outline" />}
         type="ghost"
+        style={{ textAlign: nftData ? 'left' : 'center' }}
+        size="large"
         ghost
-        block
         onClick={() => setVisible(true)}
+        block
       >
-        Select collections NFT
+        {nftData ? (
+          <Space>
+            <Avatar size={24} src={nftData.json?.image} />
+            <Typography.Text className="caption">
+              {nftData.name || nftData.json?.name}
+            </Typography.Text>
+          </Space>
+        ) : (
+          <Space>
+            <IonIcon name="chevron-down-outline" />
+            Select collections NFT
+          </Space>
+        )}
       </Button>
       <Modal
-        visible={visible}
+        open={visible}
         closeIcon={<IonIcon name="close-outline" />}
         onCancel={() => setVisible(false)}
         footer={null}

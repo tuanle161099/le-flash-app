@@ -1,24 +1,20 @@
-import {
-  Card,
-  Col,
-  DatePicker,
-  Image,
-  Row,
-  Space,
-  Spin,
-  Typography,
-  Upload,
-} from 'antd'
-import CollectionSelection from 'components/collectioSelection'
+import { useSelector } from 'react-redux'
 
-import iconUpload from 'static/images/icon-upload.svg'
+import { Card, Col, DatePicker, Row, Space, Typography } from 'antd'
+import CollectionSelection from 'components/collectionSelection'
+import UploadFile from './uploadFile'
+
+import { useFindByCollection } from 'hooks/metaFlex/useNft'
+import { AppState } from 'model'
 
 const CardSetting = () => {
+  const { collection } = useSelector((state: AppState) => state.main)
+  const nfts = useFindByCollection(collection)
   return (
     <Card bordered>
-      <Row gutter={[24, 24]}>
+      <Row gutter={[24, 24]} align="middle">
         <Col span={24}>
-          <Row>
+          <Row align="middle">
             <Col flex="auto">
               <Space direction="vertical">
                 <Typography.Title level={5}>
@@ -27,10 +23,10 @@ const CardSetting = () => {
                 <CollectionSelection />
               </Space>
             </Col>
-            <Col flex="auto">
+            <Col>
               <Space direction="vertical">
                 <Typography.Title level={5}>Balance</Typography.Title>
-                --
+                {nfts.length}
               </Space>
             </Col>
           </Row>
@@ -38,43 +34,21 @@ const CardSetting = () => {
         <Col span={24}>
           <Row gutter={24}>
             <Col span={12}>
-              <Space direction="vertical">
+              <Space direction="vertical" style={{ width: '100%' }}>
                 <Typography.Title level={5}>Start time</Typography.Title>
-                <DatePicker />
+                <DatePicker style={{ width: '100%' }} />
               </Space>
             </Col>
             <Col span={12}>
-              <Space direction="vertical">
+              <Space direction="vertical" style={{ width: '100%' }}>
                 <Typography.Title level={5}>End time</Typography.Title>
-                <DatePicker />
+                <DatePicker style={{ width: '100%' }} />
               </Space>
             </Col>
           </Row>
         </Col>
         <Col span={24}>
-          <Spin spinning={false}>
-            <Upload.Dragger
-              accept=".csv,.txt"
-              maxCount={1}
-              className="upload-file"
-              showUploadList
-              progress={{ strokeWidth: 2, showInfo: true }}
-              fileList={[]}
-            >
-              <Space direction="vertical" size={24} align="center">
-                <Image src={iconUpload} preview={false} />
-                <Space direction="vertical" size={4} align="center">
-                  <Typography.Text>
-                    Click or Drop file to upload
-                  </Typography.Text>
-                  <Typography.Text type="secondary">
-                    The accepted file types are <code>.csv</code>,{' '}
-                    <code>.txt</code>.
-                  </Typography.Text>
-                </Space>
-              </Space>
-            </Upload.Dragger>
-          </Spin>
+          <UploadFile />
         </Col>
       </Row>
     </Card>

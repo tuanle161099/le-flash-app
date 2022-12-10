@@ -2,31 +2,69 @@ import { Fragment, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import IonIcon from '@sentre/antd-ionicon'
-import { Modal, Row, Col, Typography, Button } from 'antd'
+import { Modal, Row, Col, Typography, Button, Space, Avatar } from 'antd'
 import BodySelection from 'components/bodySelection'
 
-import { useFindByCollection } from 'hooks/metaFlex/useNft'
+import { useFindByCollection, useNftData } from 'hooks/metaFlex/useNft'
 import { AppState } from 'model'
 
-const NftSelection = () => {
+type NftSelectionProps = {
+  onMintSelect?: (mintAddress: string) => void
+  mintAddress?: string
+  disabled?: boolean
+}
+
+const NftSelection = ({
+  onMintSelect = () => {},
+  mintAddress = '',
+  disabled = false,
+}: NftSelectionProps) => {
   const [visible, setVisible] = useState(false)
+  const [nftSelected, setNftSelected] = useState(mintAddress)
   const collection = useSelector(({ main }: AppState) => main.collection)
+  const recipients = useSelector(({ recipients }: AppState) => recipients)
   const nftsData = useFindByCollection(collection)
-  const mintAddress = nftsData.map((nft: any) => nft.mintAddress.toBase58())
+  const nftsSelected = recipients.map(({ mintAddress }) => mintAddress)
+
+  const mintAddresses = nftsData
+    .map((nft: any) => nft.mintAddress.toBase58())
+    .filter(
+      (mintAddress) => ![nftSelected, ...nftsSelected].includes(mintAddress),
+    )
+  const { nftData } = useNftData(nftSelected)
+
+  const onSelect = (mintAddress: string) => {
+    setNftSelected(mintAddress)
+    onMintSelect(mintAddress)
+    setVisible(false)
+  }
 
   return (
     <Fragment>
       <Button
-        icon={<IonIcon name="chevron-down-outline" />}
         type="ghost"
+        style={{ textAlign: mintAddress ? 'left' : 'center' }}
         ghost
         block
         onClick={() => setVisible(true)}
+        disabled={!collection || disabled}
       >
-        Select Nft
+        {mintAddress ? (
+          <Space>
+            <Avatar size={24} src={nftData?.json?.image} />
+            <Typography.Text className="caption">
+              {nftData?.name || nftData?.json?.name}
+            </Typography.Text>
+          </Space>
+        ) : (
+          <Space>
+            <IonIcon name="chevron-down-outline" />
+            Select NFT
+          </Space>
+        )}
       </Button>
       <Modal
-        visible={visible}
+        open={visible}
         closeIcon={<IonIcon name="close-outline" />}
         onCancel={() => setVisible(false)}
         footer={null}
@@ -37,7 +75,7 @@ const NftSelection = () => {
             <Typography.Title level={4}>Select a NFT</Typography.Title>
           </Col>
           <Col span={24}>
-            <BodySelection mintAddresses={mintAddress} />
+            <BodySelection onSelect={onSelect} mintAddresses={mintAddresses} />
           </Col>
         </Row>
       </Modal>

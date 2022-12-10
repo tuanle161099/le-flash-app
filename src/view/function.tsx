@@ -7,7 +7,7 @@ import { notifyError, notifySuccess } from '@sen-use/app'
 import { Row, Col, Button } from 'antd'
 import Redeem from './redeem'
 
-import { Recipient, useDeposit } from 'hooks/action/useDeposit'
+import { Recipient } from 'hooks/action/useInitAirdrop'
 import useWithdrawNFT from 'hooks/action/useWithdrawNFT'
 import { useUploadFile } from 'hooks/useUploadFile'
 
@@ -38,7 +38,6 @@ const View = () => {
   const [mintAddress, setMintAddress] = useState(
     '8YD4Mi1B7huwJgjaipwLrTCr3rvq5DvDsRUmxqhowD2r',
   )
-  const { onDeposit, loading: loadingDps } = useDeposit()
   const { loading: loadingWtd, onWithdraw } = useWithdrawNFT()
 
   const [pool, setPool] = useState(
@@ -157,13 +156,7 @@ const View = () => {
     <Row>
       <Col span={12}>
         {/* <NftSelection onSelect={setMintAddress} selectedNFTs={[mintAddress]} /> */}
-        <Button
-          loading={loadingDps}
-          disabled={!pool}
-          onClick={() => onDeposit(recipients, pool)}
-        >
-          Deposit
-        </Button>
+        <Button disabled={!pool}>Deposit</Button>
         <Button loading={loading} onClick={onInitPool}>
           Init Pool
         </Button>

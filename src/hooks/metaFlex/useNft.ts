@@ -71,6 +71,7 @@ export const useNftData = (mintAddress: string) => {
   const metaFlex = useMetaFlex()
 
   const fetchNftData = useCallback(async () => {
+    if (!mintAddress) return
     try {
       setLoading(true)
       const data = await metaFlex

@@ -4,6 +4,7 @@ import { AntdProvider, useSetBackground } from '@sentre/senhub'
 
 import View from 'view'
 import { AppLoader } from 'view/appLoader'
+import { AppWatcher } from 'view/watcher'
 
 import model from 'model'
 import configs from 'configs'
@@ -18,9 +19,11 @@ const {
 export const Layout = memo(() => {
   return (
     <Provider store={model}>
-      <AppLoader>
-        <View />
-      </AppLoader>
+      <AppWatcher>
+        <AppLoader>
+          <View />
+        </AppLoader>
+      </AppWatcher>
     </Provider>
   )
 })
