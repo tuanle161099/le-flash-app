@@ -1,28 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { util } from '@sentre/senhub'
-import { DistributorData } from 'lib'
+import { ChequeData } from 'lib'
 
-export type DistributorState = Record<string, DistributorData>
+export type ChequeState = Record<string, ChequeData>
 
-const NAME = 'distributor'
-const initialState: DistributorState = {}
+const NAME = 'cheque'
+const initialState: ChequeState = {}
 
 /**
  * Actions
  */
 
-export const initDistributors = createAsyncThunk(
-  `${NAME}/initDistributors`,
-  async (bulk: DistributorState) => {
+export const initCheques = createAsyncThunk(
+  `${NAME}/initCheques`,
+  async (bulk: ChequeState) => {
     return bulk
   },
 )
 
-export const upsetDistributor = createAsyncThunk<
-  DistributorState,
-  { address: string; data: DistributorData },
+export const upsetCheque = createAsyncThunk<
+  ChequeState,
+  { address: string; data: ChequeData },
   { state: any }
->(`${NAME}/upsetDistributor`, async ({ address, data }) => {
+>(`${NAME}/upsetCheque`, async ({ address, data }) => {
   if (!util.isAddress(address)) throw new Error('Invalid farm address')
   if (!data) throw new Error('Data is empty')
   return { [address]: data }
@@ -39,11 +39,11 @@ const slice = createSlice({
   extraReducers: (builder) =>
     void builder
       .addCase(
-        initDistributors.fulfilled,
+        initCheques.fulfilled,
         (state, { payload }) => void Object.assign(state, payload),
       )
       .addCase(
-        upsetDistributor.fulfilled,
+        upsetCheque.fulfilled,
         (state, { payload }) => void Object.assign(state, payload),
       ),
 })

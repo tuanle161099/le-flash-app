@@ -2,9 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import IonIcon from '@sentre/antd-ionicon'
-import { Menu, MenuProps, Row, Col } from 'antd'
+import { Menu, MenuProps, Row, Col, Avatar } from 'antd'
 
 import { useAppRouter } from 'hooks/useAppRoute'
+
+import logo from 'static/images/logo.png'
 
 const LIST_MENU_ITEM = [
   {
@@ -40,14 +42,17 @@ const Header = () => {
   }, [fetchPageKey])
 
   return (
-    <Row className="header">
-      <Col span={24}>
+    <Row className="header" align="middle">
+      <Col flex="auto">
         <Menu
           selectedKeys={[pageKey]}
           items={LIST_MENU_ITEM}
           mode="horizontal"
           onSelect={onSelect}
         />
+      </Col>
+      <Col>
+        <Avatar shape="square" src={logo} size={32} />
       </Col>
     </Row>
   )

@@ -1,16 +1,20 @@
-import { Button, Row } from 'antd'
-import { AppState } from 'model'
-import { useSelector } from 'react-redux'
+import { Col, Row, Typography } from 'antd'
+import Hero from './hero'
+import ReceiveList from './receiveList'
 
 const Dashboard = () => {
-  const distributors = useSelector((state: AppState) => state.distributors)
-  console.log(distributors)
   return (
-    <Row>
-      <Button type="primary">Primary</Button>
-      <Button ghost type="ghost">
-        Gh
-      </Button>
+    <Row gutter={[32, 32]}>
+      <Col span={24}>
+        <Typography.Title level={3}>Dashboard</Typography.Title>
+      </Col>
+      <Col span={24}>
+        <Hero />
+      </Col>
+      <Col span={24}>
+        <ReceiveList />
+      </Col>
+      <Col span={24} />
     </Row>
   )
 }
