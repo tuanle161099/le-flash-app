@@ -108,7 +108,7 @@ export const useInitAirdrop = () => {
         await leFlash._provider.sendAll(
           txs.map(({ tx, signers }) => ({ tx, signers })),
         )
-        return notifySuccess('Initialize new airdrop successfully!', txId)
+        return notifySuccess('Initialize new airdrop!', txId)
       } catch (error) {
         notifyError(error)
       } finally {

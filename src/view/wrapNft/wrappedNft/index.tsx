@@ -1,44 +1,55 @@
 import { useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { util } from '@sentre/senhub'
 
 import { Card, Col, Row, Table, Typography } from 'antd'
 import NFTDisplay from 'components/nftDisplay'
+import DepositNft from './depositNft'
 
 import { AppState } from 'model'
+import Address from 'components/address'
 
 export const COLUMNS = [
   {
-    title: 'MINT ADDRESS',
-    dataIndex: 'mint',
-    render: (walletAddress: string) => (
-      <Typography.Text
-        type="success"
-        underline
-        onClick={() => window.open(util.explorer(walletAddress), '_blank')}
-        style={{ cursor: 'pointer' }}
-      >
-        {util.shortenAddress(walletAddress)}
-      </Typography.Text>
+    title: 'COLLECTION',
+    dataIndex: 'collectionMint',
+    render: (collectionAddr: string) => (
+      <NFTDisplay mintAddress={collectionAddr} />
     ),
   },
   {
-    title: 'NFT ADDRESS',
-    dataIndex: 'nftMint',
-    render: (mintAddress: string) => <NFTDisplay mintAddress={mintAddress} />,
+    title: 'MINT ADDRESS',
+    dataIndex: 'mint',
+    render: (mintAddress: string) => (
+      <Address large success address={mintAddress} />
+    ),
+  },
+  {
+    title: 'DEPOSIT',
+    dataIndex: 'poolAddress',
+    render: (poolAddress: string) => <DepositNft poolAddress={poolAddress} />,
   },
 ]
 
 const WrappedNFT = () => {
   const pools = useSelector((state: AppState) => state.pools)
   const nftWrapped = useMemo(() => {
-    const result: { mint: string; nftMint: string }[] = []
+    const result: {
+      mint: string
+      collectionMint: string
+      poolAddress: string
+    }[] = []
     for (const address in pools) {
-      const nftAddress = pools[address].mint.toBase58()
+      const collectionAddr = pools[address].mint.toBase58()
       const mintAddress = pools[address].mintLpt.toBase58()
-      const check = result.find(({ nftMint }) => nftMint === nftAddress)
+      const check = result.find(
+        ({ collectionMint }) => collectionMint === collectionAddr,
+      )
       if (check) continue
-      result.push({ mint: mintAddress, nftMint: nftAddress })
+      result.push({
+        mint: mintAddress,
+        collectionMint: collectionAddr,
+        poolAddress: address,
+      })
     }
     return result
   }, [pools])

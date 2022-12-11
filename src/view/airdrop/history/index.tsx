@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useWalletAddress } from '@sentre/senhub'
 
@@ -8,6 +9,7 @@ import { HISTORY_COLUMNS } from './column'
 import FilterTrans from 'components/filterTrans'
 
 const History = () => {
+  const [pageSize, setPageSize] = useState(4)
   const distributors = useSelector(({ distributors }: AppState) => distributors)
   const walletAddress = useWalletAddress()
 
@@ -30,7 +32,7 @@ const History = () => {
           <Table
             rowKey={(record) => record.distributorAddress}
             columns={HISTORY_COLUMNS}
-            dataSource={filteredDistributors}
+            dataSource={filteredDistributors.slice(0, pageSize)}
             pagination={false}
             rowClassName={(record, index) =>
               index % 2 ? 'odd-row' : 'even-row'
@@ -38,7 +40,13 @@ const History = () => {
           />
         </Col>
         <Col span={24} style={{ textAlign: 'center' }}>
-          <Button type="ghost">View more</Button>
+          <Button
+            disabled={pageSize >= filteredDistributors.length}
+            onClick={() => setPageSize(pageSize + 4)}
+            type="ghost"
+          >
+            View more
+          </Button>
         </Col>
       </Row>
     </Card>

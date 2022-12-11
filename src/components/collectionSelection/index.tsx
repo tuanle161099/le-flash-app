@@ -1,23 +1,26 @@
 import { Fragment, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
 import IonIcon from '@sentre/antd-ionicon'
 import { Modal, Row, Col, Typography, Button, Space, Avatar } from 'antd'
 import BodySelection from 'components/bodySelection'
 
 import { useMyCollection, useNftData } from 'hooks/metaFlex/useNft'
-import { setCollection } from 'model/main.controller'
-import { AppDispatch, AppState } from 'model'
 
-const CollectionSelection = () => {
+type CollectionSelectionProps = {
+  onSelect: (collection: string) => void
+  collection: string
+}
+
+const CollectionSelection = ({
+  collection,
+  onSelect,
+}: CollectionSelectionProps) => {
   const [visible, setVisible] = useState(false)
-  const { collection } = useSelector(({ main }: AppState) => main)
   const collections = useMyCollection()
-  const dispatch = useDispatch<AppDispatch>()
   const { nftData } = useNftData(collection)
 
   const onSelectCollection = (collection: string) => {
-    dispatch(setCollection(collection))
+    onSelect(collection)
     setVisible(false)
   }
 

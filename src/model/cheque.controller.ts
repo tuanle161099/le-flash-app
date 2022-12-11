@@ -28,6 +28,14 @@ export const upsetCheque = createAsyncThunk<
   return { [address]: data }
 })
 
+export const removeCheque = createAsyncThunk(
+  `${NAME}/removeCheque`,
+  async (address: string) => {
+    if (!util.isAddress(address)) throw new Error('Invalid farm address')
+    return address
+  },
+)
+
 /**
  * Usual procedure
  */
@@ -45,6 +53,10 @@ const slice = createSlice({
       .addCase(
         upsetCheque.fulfilled,
         (state, { payload }) => void Object.assign(state, payload),
+      )
+      .addCase(
+        removeCheque.fulfilled,
+        (state, { payload }) => void delete state[payload],
       ),
 })
 

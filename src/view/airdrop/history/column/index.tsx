@@ -1,7 +1,8 @@
 import Collection from './collection'
 import CreatedAt from './createdAt'
 import UnclaimedList from './unClaimedList'
-import EndAt from './endAt'
+import StartedAt from './startedAt'
+import Total from './total'
 
 export type ColumnProps = {
   distributorAddress: string
@@ -16,10 +17,10 @@ export const HISTORY_COLUMNS = [
     ),
   },
   {
-    title: 'EXPIRATION DATE',
+    title: 'STARTED DATE',
     dataIndex: 'distributorAddress',
     render: (distributorAddress: string) => (
-      <EndAt distributorAddress={distributorAddress} />
+      <StartedAt distributorAddress={distributorAddress} />
     ),
   },
   {
@@ -27,6 +28,14 @@ export const HISTORY_COLUMNS = [
     dataIndex: 'distributorAddress',
     render: (distributorAddress: string) => (
       <Collection distributorAddress={distributorAddress} />
+    ),
+  },
+
+  {
+    title: 'Total',
+    dataIndex: 'distributorAddress',
+    render: (distributorAddress: string) => (
+      <Total distributorAddress={distributorAddress} />
     ),
   },
 

@@ -1,15 +1,18 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Card, Col, DatePicker, Row, Space, Typography } from 'antd'
 import CollectionSelection from 'components/collectionSelection'
 import UploadFile from './uploadFile'
 
 import { useFindByCollection } from 'hooks/metaFlex/useNft'
-import { AppState } from 'model'
+import { AppDispatch, AppState } from 'model'
+import { setCollection } from 'model/main.controller'
 
 const CardSetting = () => {
   const { collection } = useSelector((state: AppState) => state.main)
   const nfts = useFindByCollection(collection)
+  const dispatch = useDispatch<AppDispatch>()
+
   return (
     <Card bordered>
       <Row gutter={[24, 24]} align="middle">
@@ -20,7 +23,10 @@ const CardSetting = () => {
                 <Typography.Title level={5}>
                   Select your collection airdrop
                 </Typography.Title>
-                <CollectionSelection />
+                <CollectionSelection
+                  collection={collection}
+                  onSelect={(val) => dispatch(setCollection(val))}
+                />
               </Space>
             </Col>
             <Col>
@@ -33,15 +39,9 @@ const CardSetting = () => {
         </Col>
         <Col span={24}>
           <Row gutter={24}>
-            <Col span={12}>
+            <Col span={24}>
               <Space direction="vertical" style={{ width: '100%' }}>
                 <Typography.Title level={5}>Start time</Typography.Title>
-                <DatePicker style={{ width: '100%' }} />
-              </Space>
-            </Col>
-            <Col span={12}>
-              <Space direction="vertical" style={{ width: '100%' }}>
-                <Typography.Title level={5}>End time</Typography.Title>
                 <DatePicker style={{ width: '100%' }} />
               </Space>
             </Col>
