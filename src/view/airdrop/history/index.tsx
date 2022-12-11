@@ -5,6 +5,7 @@ import { Button, Card, Col, Row, Table, Typography } from 'antd'
 
 import { AppState } from 'model'
 import { HISTORY_COLUMNS } from './column'
+import FilterTrans from 'components/filterTrans'
 
 const History = () => {
   const distributors = useSelector(({ distributors }: AppState) => distributors)
@@ -22,7 +23,9 @@ const History = () => {
         <Col flex="auto">
           <Typography.Title level={5}>History</Typography.Title>
         </Col>
-        <Col>Filter</Col>
+        <Col>
+          <FilterTrans />
+        </Col>
         <Col span={24}>
           <Table
             rowKey={(record) => record.distributorAddress}

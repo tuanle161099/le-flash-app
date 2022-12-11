@@ -63,11 +63,17 @@ const UnclaimedList = ({ distributorAddress }: ColumnProps) => {
 
   return (
     <Fragment>
-      <Button
-        icon={<IonIcon name="document-text-outline" />}
-        onClick={() => setVisible(true)}
-        disabled={!listReceivers.length}
-      />
+      {listReceivers.length ? (
+        <Button
+          icon={<IonIcon name="document-text-outline" />}
+          onClick={() => setVisible(true)}
+          disabled={!listReceivers.length}
+        />
+      ) : (
+        <Typography.Text className="caption" type="success">
+          ALL CLAIMED
+        </Typography.Text>
+      )}
       <Modal
         open={visible}
         footer={null}

@@ -57,7 +57,7 @@ export const useClaim = () => {
         tran.add(txClose)
 
         await leFlash._provider.sendAndConfirm(tran)
-        notifySuccess('Claimed NFT successfully!', txId)
+        notifySuccess('Claimed NFT', txId)
       } catch (error) {
         notifyError(error)
       } finally {

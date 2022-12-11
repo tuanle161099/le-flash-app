@@ -1,12 +1,14 @@
+import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useWalletAddress } from '@sentre/senhub'
+import { MerkleDistributor } from 'lib'
 
 import { Card, Col, Row, Table, Typography } from 'antd'
+import FilterTrans from 'components/filterTrans'
+
 import { AppState } from 'model'
 import { RECEIVE_COLUMNS } from './column'
-import { useCallback, useEffect, useState } from 'react'
 import { useGetMetadata } from 'hooks/metadata/useGetMetadata'
-import { MerkleDistributor } from 'lib'
 
 export type ReceiveData = {
   sender: string
@@ -60,7 +62,9 @@ const ReceiveList = () => {
         <Col flex="auto">
           <Typography.Title level={4}>Airdrop Receive</Typography.Title>
         </Col>
-        <Col>Filter</Col>
+        <Col>
+          <FilterTrans />
+        </Col>
         <Col span={24}>
           <Table
             columns={RECEIVE_COLUMNS}

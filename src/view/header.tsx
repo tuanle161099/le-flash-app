@@ -19,6 +19,11 @@ const LIST_MENU_ITEM = [
     key: 'airdrop',
     icon: <IonIcon name="airplane-outline" />,
   },
+  {
+    label: 'Wrap NFT',
+    key: 'wrap-nft',
+    icon: <IonIcon name="cube-outline" />,
+  },
 ]
 
 const Header = () => {
