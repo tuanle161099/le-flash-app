@@ -8,6 +8,7 @@ export type RecipientInfo = {
   mintAddress: string
   walletAddress: string
   chequeAddress?: string
+  index: number
 }
 
 export type RecipientState = RecipientInfo[]
@@ -38,9 +39,12 @@ export const removeRecipient = createAsyncThunk<
   { state: any }
 >(`${NAME}/removeRecipient`, async ({ index }, { getState }) => {
   const { recipients } = getState()
-  const nextRecipients = [...recipients]
-  nextRecipients.splice(index, 1)
-  return [...nextRecipients]
+  const nextRecipients = JSON.parse(
+    JSON.stringify(recipients),
+  ) as RecipientInfo[]
+  const i = nextRecipients.findIndex((recipient) => recipient.index === index)
+  if (i !== -1) nextRecipients.splice(i, 1)
+  return nextRecipients
 })
 
 export const setRecipient = createAsyncThunk(
@@ -62,7 +66,7 @@ const slice = createSlice({
     void builder
       .addCase(
         addRecipient.fulfilled,
-        (state, { payload }) => void Object.assign(state, payload),
+        (state, { payload }) => (state = payload),
       )
       .addCase(
         removeRecipient.fulfilled,

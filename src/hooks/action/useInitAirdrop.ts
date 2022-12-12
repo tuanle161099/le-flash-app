@@ -60,6 +60,7 @@ export const useInitAirdrop = () => {
             walletAddress,
             chequeAddress,
             mintAddress,
+            index: 1,
           })
         }
 

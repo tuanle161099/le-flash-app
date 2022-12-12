@@ -1,3 +1,7 @@
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import Papa from 'papaparse'
+
 import {
   Space,
   Spin,
@@ -9,31 +13,28 @@ import {
   Col,
   Button,
 } from 'antd'
-import { useState } from 'react'
-import Papa from 'papaparse'
+import IonIcon from '@sentre/antd-ionicon'
 
-import iconUpload from 'static/images/icon-upload.svg'
-import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'model'
 import {
   addRecipient,
   RecipientInfo,
   setRecipient,
 } from 'model/recipients.controller'
-import IonIcon from '@sentre/antd-ionicon'
+import iconUpload from 'static/images/icon-upload.svg'
 
 const UploadFile = () => {
   const [loading, setLoading] = useState(false)
   const [file, setFile] = useState<File>()
   const dispatch = useDispatch<AppDispatch>()
 
-  const parse = (file: any): Promise<Array<string>> => {
+  const parse = (file: any): Promise<Array<string[]>> => {
     return new Promise((resolve, reject) => {
       return Papa.parse(file, {
         skipEmptyLines: true,
         complete: ({ data }, fileInfo) => {
           setFile(fileInfo)
-          return resolve(data as Array<string>)
+          return resolve(data as Array<string[]>)
         },
       })
     })
@@ -44,8 +45,12 @@ const UploadFile = () => {
       setLoading(true)
       const listUser = await parse(file)
       const newRecipients: RecipientInfo[] = []
-      for (const walletAddress of listUser)
-        newRecipients.push({ mintAddress: '', walletAddress })
+      let index = 0
+      for (const [walletAddress] of listUser) {
+        newRecipients.push({ mintAddress: '', walletAddress, index })
+        index++
+      }
+
       await dispatch(addRecipient({ newRecipients }))
     } catch (error) {
     } finally {

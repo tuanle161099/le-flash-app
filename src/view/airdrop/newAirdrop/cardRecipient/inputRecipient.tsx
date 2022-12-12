@@ -31,9 +31,14 @@ const InputRecipient = ({
     const cloneInfo = {
       mintAddress: info.mintAddress,
       walletAddress: info.walletAddress,
+      index,
     }
     setInfo({ mintAddress: '', walletAddress: '' })
     return dispatch(addRecipient({ newRecipients: [cloneInfo] }))
+  }
+
+  const onDelete = async () => {
+    await dispatch(removeRecipient({ index }))
   }
 
   return (
@@ -56,7 +61,7 @@ const InputRecipient = ({
       <Col span={2}>
         {walletAddress ? (
           <Button
-            type="ghost"
+            type="text"
             ghost
             icon={
               <Typography.Text type="danger">
@@ -64,7 +69,7 @@ const InputRecipient = ({
               </Typography.Text>
             }
             block
-            onClick={() => dispatch(removeRecipient({ index }))}
+            onClick={onDelete}
           />
         ) : (
           <Button

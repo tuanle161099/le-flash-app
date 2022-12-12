@@ -49,7 +49,7 @@ const CardRecipient = () => {
             <Divider style={{ margin: 0 }} />
           </Col>
         )}
-        {recipients.map(({ mintAddress, walletAddress }, index) => (
+        {recipients.map(({ mintAddress, walletAddress, index }) => (
           <Col key={mintAddress + index} span={24}>
             <InputRecipient
               mintAddress={mintAddress}

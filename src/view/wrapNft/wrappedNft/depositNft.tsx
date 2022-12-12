@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { Button, Col, Empty, Modal, Row, Space, Typography } from 'antd'
 import CardNFT from 'components/cardNFT'
@@ -16,10 +16,10 @@ type DepositNftProps = {
 const DepositNft = ({ poolAddress }: DepositNftProps) => {
   const [visible, setVisible] = useState(false)
   const [listNFT, setListNFT] = useState<string[]>([])
+  const [mintAddresses, setMintAddresses] = useState<string[]>([])
   const pools = useSelector((state: AppState) => state.pools)
   const collectionAddr = pools[poolAddress].mint.toBase58()
   const nftsData = useFindByCollection(collectionAddr)
-  const mintAddresses = nftsData.map((nft: any) => nft.mintAddress.toBase58())
   const { loading, onWrapNfts } = useWrap()
 
   const onSelect = (mintAddress: string) => {
@@ -40,6 +40,19 @@ const DepositNft = ({ poolAddress }: DepositNftProps) => {
     setListNFT([])
   }
 
+  const wrapNFT = async () => {
+    await onWrapNfts(listNFT, poolAddress)
+    const filterMint = [...mintAddresses].filter(
+      (mint) => !listNFT.includes(mint),
+    )
+    setMintAddresses(filterMint)
+  }
+
+  useEffect(() => {
+    const mints = nftsData.map((nft: any) => nft.mintAddress.toBase58())
+    setMintAddresses(mints)
+  }, [nftsData])
+
   return (
     <Fragment>
       <Button onClick={() => setVisible(true)}>Wrap NFT</Button>
@@ -53,7 +66,7 @@ const DepositNft = ({ poolAddress }: DepositNftProps) => {
             <Button onClick={onCancel}>Cancel</Button>
             <Button
               loading={loading}
-              onClick={() => onWrapNfts(listNFT, poolAddress)}
+              onClick={wrapNFT}
               disabled={!listNFT.length}
               type="primary"
             >

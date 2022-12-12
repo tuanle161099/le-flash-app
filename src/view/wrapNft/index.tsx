@@ -9,10 +9,10 @@ const WrapNFT = () => {
       <Col span={24}>
         <Typography.Title level={3}>Wrap NFT</Typography.Title>
       </Col>
-      <Col xs={24} md={12}>
+      <Col xs={24} md={24} lg={12}>
         <WrappedNFT />
       </Col>
-      <Col xs={24} md={12}>
+      <Col xs={24} md={24} lg={12}>
         <Row gutter={[24, 24]}>
           <Col span={24}>
             <WrapNew />

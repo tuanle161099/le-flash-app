@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import IonIcon from '@sentre/antd-ionicon'
-import { Menu, MenuProps, Row, Col, Avatar } from 'antd'
+import { Menu, MenuProps, Row, Col, Avatar, Space, Typography } from 'antd'
 
 import { useAppRouter } from 'hooks/useAppRoute'
 
@@ -57,7 +57,12 @@ const Header = () => {
         />
       </Col>
       <Col>
-        <Avatar shape="square" src={logo} size={32} />
+        <Space>
+          <Avatar shape="square" src={logo} size={32} />
+          <Typography.Title type="success" level={4}>
+            Le FLash
+          </Typography.Title>
+        </Space>
       </Col>
     </Row>
   )

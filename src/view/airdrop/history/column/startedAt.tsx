@@ -12,8 +12,6 @@ import { useMetadata } from 'hooks/metadata/useGetMetadata'
 const StartedAt = ({ distributorAddress }: ColumnProps) => {
   const metadata = useMetadata(distributorAddress)
 
-  console.log(metadata)
-
   const startedAt = useMemo(() => {
     if (!metadata?.data) return 0
     const merkle = MerkleDistributor.fromBuffer(Buffer.from(metadata.data))

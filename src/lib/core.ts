@@ -296,7 +296,6 @@ class LeFlashProgram {
       })
       .transaction()
     let txId = ''
-    console.log(tx, 'tx')
     if (sendAndConfirm) {
       txId = await this._provider.sendAndConfirm(tx, [])
     }

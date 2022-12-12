@@ -9,6 +9,7 @@ import useWithdrawNFT from 'hooks/action/useWithdrawNFT'
 const CardLockNFT = ({ chequeAddr }: { chequeAddr: string }) => {
   const chequeData = useSelector((state: AppState) => state.cheques[chequeAddr])
   const { loading, onWithdraw } = useWithdrawNFT()
+  if (!chequeData) return null
   return (
     <Row align="middle">
       <Col flex="auto">
