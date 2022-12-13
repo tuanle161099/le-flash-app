@@ -82,9 +82,11 @@ const UnclaimedList = ({ distributorAddress }: ColumnProps) => {
       >
         <Row gutter={[24, 24]}>
           <Col span={24}>
-            <Typography.Title level={5}> List Receivers </Typography.Title>
+            <Typography.Title level={5}>
+              Unclaimed List ({listReceivers.length})
+            </Typography.Title>
           </Col>
-          <Col span={24}>
+          <Col span={24} style={{ maxHeight: 500 }} className="scrollbar">
             <Table
               pagination={false}
               columns={COLUMNS}

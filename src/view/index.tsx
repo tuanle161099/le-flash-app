@@ -1,23 +1,24 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useAppRoute } from '@sentre/senhub'
+import { net, useAppRoute } from '@sentre/senhub'
 
 import { Col, Row } from 'antd'
 import Header from './header'
 import Dashboard from './dashboard'
 import Airdrop from './airdrop'
 import WrapNFT from './wrapNft'
+import DevnetOnly from './devnetOnly'
 
 import './index.less'
 
 const View = () => {
   const { root, extend } = useAppRoute()
-
+  if (net !== 'devnet') return <DevnetOnly />
   return (
     <Row gutter={[0, 24]}>
       <Col span={24}>
         <Header />
       </Col>
-      <Col xs={24} xxl={16} className="container">
+      <Col span={24} className="container">
         <Switch>
           <Route exact path={extend('/dashboard')} component={Dashboard} />
           <Route exact path={extend('/airdrop')} component={Airdrop} />
