@@ -6,7 +6,7 @@ import { notifyError, notifySuccess } from '@sen-use/app'
 
 import useLeFlash from 'hooks/useLeflash'
 import { AppState } from 'model'
-import { useWalletAddress } from '@sentre/senhub/dist'
+import { useWalletAddress } from '@sentre/senhub'
 
 const useWrap = () => {
   const pools = useSelector(({ pools }: AppState) => pools)
