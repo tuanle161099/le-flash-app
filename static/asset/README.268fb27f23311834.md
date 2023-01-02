@@ -1,6 +1,6 @@
 # Le Flash
 
-LeFlash send multi NFTs to multi addresses with just one step
+The app for send multi NFTs to multi address with just one step
 
 - Unlimited airdrop for only ONE sign
 - Easily tracking
